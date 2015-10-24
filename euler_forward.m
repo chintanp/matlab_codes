@@ -38,7 +38,10 @@ function [x,y]= euler_forward(f, xinit, yinit, xfinal, n)
     % https://www.mccormick.northwestern.edu/docs/efirst/ode.pdf 
     
     
-
+    % clear all; 
+    % clc;
+    figure;
+    
     % Calculation of h from xinit, xfinal and n
     % calculate step size
     h = (xfinal - xinit)/n;
@@ -56,10 +59,10 @@ function [x,y]= euler_forward(f, xinit, yinit, xfinal, n)
 
     % Calculation of x and y
     for i = 1:n
-        for j = 1:xrow_count
-            x(j, i+1) = x(j, i) + h(j);
-            y(j, i+1) = y(j, i) + h(j)* builtin('_paren', f(x(j, i), y(:, i)), j, 1);  % An undocumented matlab feature/hack, solution taken from http://stackoverflow.com/questions/3627107/how-can-i-index-a-matlab-array-returned-by-a-function-without-first-assigning-it 
-        end
+        %for j = 1:xrow_count
+            x(:, i+1) = x(:, i) + h;
+            y(:, i+1) = y(:, i) + h .* f(x(:, i), y(:, i)); 
+        %end
     end
     
    for j = 1:xrow_count
